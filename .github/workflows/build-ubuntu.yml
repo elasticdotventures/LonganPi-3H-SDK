@@ -2,7 +2,8 @@ name: mkimg-lpi3h-ubuntu-ci
 
 on:
   workflow_dispatch:
-  
+  #repository_dispatch:
+  #  types: [build-longhan]  
 
 env:
   ARCH: arm64
