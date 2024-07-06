@@ -79,6 +79,7 @@ jobs:
             sudo rm -rf LonganPi-3H-SDK
 
       - name: 'Upload Artifact'
+        id: upload
         uses: actions/upload-artifact@v4
         with:
           retention-days: 30
@@ -86,6 +87,11 @@ jobs:
           path: |
                   *.xz
                   *.sha512
+
+      - name: Set Artifact Name as Environment Variable
+        run: |
+          echo "ARTIFACT_ID=${{ steps.upload.outputs.artifact-id }}" >> $GITHUB_ENV
+          echo "ARTIFACT_NAME=lpi3h-ubuntu-${{ env.BOARD }}-${{ env.BUILD_ID }}" >> $GITHUB_ENV
 
       # Trigger OctoPi build on success by sending "ubuntu_ready"
       - name: Trigger OctoPi Build
@@ -99,7 +105,6 @@ jobs:
               workflow_id: 'octopi-build-image.yml',  
               ref: context.ref,
               inputs: {
-                artifact: ${{ steps.upload.outputs.artifact_id }}
-                // artifact: 'lpi3h-${{ env.BOARD }}-${{ env.BUILD_ID }}-ubuntu'
+                artifact: process.env.ARTIFACT_ID
               } 
             });
