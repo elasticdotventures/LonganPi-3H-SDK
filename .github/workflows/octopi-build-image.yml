@@ -22,7 +22,11 @@ on:
         default: false
         required: true
         type: boolean
-
+      artifact:
+        description: 'Artifact name to download'
+        required: true
+        type: string
+  
 env:
   ARCH: arm64
   BOARD: lpi3h  # Set this to your desired board name
