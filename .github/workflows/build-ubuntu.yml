@@ -62,8 +62,8 @@ jobs:
                 sh mkuboot.sh
                 sh mklinux.sh
                 sh mkoverlay.sh
-                sudo sh mkrootfs-ubuntu.sh ./build/rootfs-ubuntu.tar
-                sudo sh mkimage.sh
+                sudo sh mkrootfs-ubuntu.sh 
+                sudo sh mkimage.sh ./build/rootfs-ubuntu.tar
               popd
 
       - name: Make Checksum file & Compress files & Clean
