@@ -18,6 +18,23 @@ jobs:
     env:
       CREATE_TARBALL: LonganPi-3H-SDK/build/rootfs.tar
     steps:
+      # Trigger OctoPi build on success by sending "ubuntu_ready"
+      - name: Trigger OctoPi Build
+        # if: success()
+        uses: actions/github-script@v4
+        with:
+          script: |-
+            github.rest.actions.createWorkflowDispatch({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'octopi-build-image.yml',  
+              ref: context.ref,
+              inputs: {
+                ubuntu_ready: true
+              } 
+            });
+
+
       - name: Install Software
         run: |
               sudo apt update && \
@@ -86,7 +103,7 @@ jobs:
 
       # Trigger OctoPi build on success by sending "ubuntu_ready"
       - name: Trigger OctoPi Build
-        if: success()
+        # if: success()
         uses: actions/github-script@v4
         with:
           script: |-
