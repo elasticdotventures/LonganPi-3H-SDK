@@ -99,6 +99,7 @@ jobs:
               workflow_id: 'octopi-build-image.yml',  
               ref: context.ref,
               inputs: {
-                artifact: 'lpi3h-${{ env.BOARD }}-${{ env.BUILD_ID }}-ubuntu'
+                artifact: ${{ steps.upload.outputs.artifact_id }}
+                // artifact: 'lpi3h-${{ env.BOARD }}-${{ env.BUILD_ID }}-ubuntu'
               } 
             });
