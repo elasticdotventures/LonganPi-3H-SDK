@@ -3,6 +3,14 @@ name: octoprint-lpi3h-ci
 
 on:
   workflow_dispatch:
+    # This trigger only receives events when the workflow file is on the default branch.
+  workflow_call:
+    inputs:
+      ubuntu_ready:
+        description: 'true a new ubuntu image ready'
+        default: false
+        required: true
+        type: boolean
 
 env:
   ARCH: arm64
@@ -15,11 +23,6 @@ jobs:
     env:
       CREATE_TARBALL: LonganPi-3H-SDK/build/rootfs.tar
     steps:
-      - name: Download Longan Pi3H Image Artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: lpi3h-ubuntu-${{ env.BOARD }}-${{ env.BUILD_ID }}  # Ensure this matches the name used in the upload step
-          path: repository/src/image
 
       - name: Install Dependencies
         run: |
@@ -39,9 +42,9 @@ jobs:
           submodules: true
 
       - name: Download Longan Pi3H Image Artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
-          name: lpi3h-ubuntu-${{ env.BOARD }}-${{ env.BUILD_ID }}
+          name: lpi3h-ubuntu-${{ env.BOARD }}-${{ env.BUILD_ID }}-ubuntu
           path: repository/src/image
 
       - name: Update CustomPiOS Paths
@@ -49,9 +52,9 @@ jobs:
           cd repository/src
           ../../CustomPiOS/src/update-custompios-paths
 
-      - name: Force apt mirror to work around intermittent mirror hiccups
-        run: |
-          echo "OCTOPI_APTMIRROR=http://mirror.us.leaseweb.net/raspbian/raspbian" > repository/src/config.local
+      # - name: Force apt mirror to work around intermittent mirror hiccups
+      #   run: |
+      #     echo "OCTOPI_APTMIRROR=http://mirror.us.leaseweb.net/raspbian/raspbian" > repository/src/config.local
 
       - name: Build Image
         run: |
@@ -71,7 +74,7 @@ jobs:
           echo "::set-output name=image::$IMAGE"
 
       # artifact upload will take care of zipping for us
-      - uses: actions/upload-artifact@v1
+      - uses: actions/upload-artifact@v3
         with:
           name: ${{ steps.copy.outputs.image }}
           path: ${{ steps.copy.outputs.image }}.img
