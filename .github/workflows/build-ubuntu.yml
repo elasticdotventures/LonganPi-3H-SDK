@@ -91,7 +91,8 @@ jobs:
       - name: Set Artifact Name as Environment Variable
         run: |
           echo "ARTIFACT_ID=${{ steps.upload.outputs.artifact-id }}" >> $GITHUB_ENV
-          echo "ARTIFACT_NAME=lpi3h-ubuntu-${{ env.BOARD }}-${{ env.BUILD_ID }}" >> $GITHUB_ENV
+          echo "ARTIFACT_NAME=lpi3h-${{ env.BOARD }}-${{ env.BUILD_ID }}-ubuntu" >> $GITHUB_ENV
+          echo "RUN_ID=${{ github.run_id }}" >> $GITHUB_ENV
 
       # Trigger OctoPi build on success by sending "ubuntu_ready"
       - name: Trigger OctoPi Build
@@ -105,6 +106,8 @@ jobs:
               workflow_id: 'octopi-build-image.yml',  
               ref: context.ref,
               inputs: {
-                artifact: process.env.ARTIFACT_ID
+                artifact_name: process.env.ARTIFACT_NAME,
+                artifact_id: process.env.ARTIFACT_ID,
+                run_id: process.env.RUN_ID
               } 
             });

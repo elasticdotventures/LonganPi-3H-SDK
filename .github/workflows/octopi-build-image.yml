@@ -4,16 +4,26 @@ name: octoprint-lpi3h-ci
 on:
   workflow_dispatch:
     inputs:
-      artifact:
+      artifact_id:
+        description: 'Artifact id to download'
+        default: ''
+        required: true
+        type: string
+      artifact_name:
         description: 'Artifact name to download'
         default: ''
         required: true
         type: string
-    # This trigger only receives events when the workflow file is on the default branch.
+      run_id:
+        description: 'Run ID to download'
+        default: ''
+        required: true
+        type: string
+      # This trigger only receives events when the workflow file is on the default branch.
     # https://github.com/actions/github-script/issues/128
   workflow_call:
     inputs:
-      artifact:
+      artifact_id:
         description: 'Artifact name to download'
         required: true
         default: ''
@@ -23,16 +33,22 @@ env:
   ARCH: arm64
   BOARD: lpi3h  # Set this to your desired board name
   BUILD_ID: ${{ github.run_id }}  # This sets a unique build ID based on the GitHub run ID
-  ARTIFACT: ${{ github.event.inputs.artifact }}
+  ARTIFACT_ID: ${{ github.event.inputs.artifact_id }}
+  ARTIFACT_NAME: ${{ github.event.inputs.artifact_name }}
+  RUN_ID: ${{ github.event.inputs.run_id }}
 
 jobs:
   prepare:
     runs-on: ubuntu-22.04
     steps:
       # output the artifact
-      - name: Artifact
+      - name: Artifact Info
         run: |-
-          echo "Artifact: ${{ env.ARTIFACT }}"
+          echo "env.ARTIFACT_ID: ${{ env.ARTIFACT_ID }}"
+          echo "env.ARTIFACT_NAME: ${{ env.ARTIFACT_NAME }}"
+          echo "env.RUN_ID: ${{ env.RUN_ID }}"
+          echo "github.RUN_ID: ${{ github.run_id }}"
+      
 
       - name: Install Dependencies
         run: |
