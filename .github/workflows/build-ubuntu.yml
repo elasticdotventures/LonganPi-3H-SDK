@@ -3,7 +3,7 @@ name: mkimg-lpi3h-ubuntu-ci
 on:
   workflow_dispatch:
   #repository_dispatch:
-  #  types: [build-longhan]  
+  #  types: [build-longhan]
 
 env:
   ARCH: arm64
@@ -16,8 +16,6 @@ jobs:
     runs-on: ubuntu-22.04
     env:
       CREATE_TARBALL: LonganPi-3H-SDK/build/rootfs.tar
-      BOARD: ${{ env.BOARD }}
-      BUILD_ID: ${{ env.BUILD_ID }}
     steps:
       - name: Install Software
         run: |
@@ -37,7 +35,7 @@ jobs:
           repository: pengutronix/genimage
           path: genimage
           ref: v17
-          
+
       - name: build genimage
         run: |
             pushd genimage
