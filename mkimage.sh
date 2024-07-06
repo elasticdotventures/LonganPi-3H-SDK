@@ -1,8 +1,11 @@
 #!/bin/bash
 
-if [ ! -e ./build/rootfs.tar ]
-then
-    echo "./build/rootfs.tar not found"
+# Accept a filename as an argument, default to ./build/rootfs.tar
+rootfstarfile="${1:-./build/rootfs.tar}"
+
+# Check if the file exists
+if [ ! -e "$rootfstarfile" ]; then
+    echo "$rootfstarfile not found"
     exit 1
 fi
 
@@ -29,11 +32,11 @@ mkdir -pv ./build/rootfs
 if [ `id -u` -ne 0 ]
 then
 	fuse2fs -o fakeroot ./build/input/rootfs.ext4 ./build/rootfs
-	fakeroot -- tar --numeric-owner -xpf build/rootfs.tar -C ./build/rootfs/
+	fakeroot -- tar --numeric-owner -xpf $rootfstarfile -C ./build/rootfs/
 	sudo umount ./build/rootfs
 else
 	mount ./build/input/rootfs.ext4 ./build/rootfs/
-	tar --numeric-owner -xpf build/rootfs.tar -C ./build/rootfs/
+	tar --numeric-owner -xpf $rootfstarfile -C ./build/rootfs/
 	umount ./build/rootfs
 fi
 

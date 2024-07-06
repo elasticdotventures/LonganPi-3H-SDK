@@ -62,7 +62,7 @@ jobs:
                 sh mkuboot.sh
                 sh mklinux.sh
                 sh mkoverlay.sh
-                sudo sh mkrootfs-ubuntu.sh
+                sudo sh mkrootfs-ubuntu.sh ./build/rootfs-ubuntu.tar
                 sudo sh mkimage.sh
               popd
 
