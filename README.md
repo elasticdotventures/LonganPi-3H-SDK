@@ -39,6 +39,7 @@ sudo apt install qemu-user-static gcc-aarch64-linux-gnu mmdebstrap git binfmt-su
 ```shell
 ./mkrootfs.sh
 ```
+** or `mkrootfs-ubuntu.sh`
 
 6. Build sdcard image
 
