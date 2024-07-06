@@ -3,6 +3,12 @@ name: octoprint-lpi3h-ci
 
 on:
   workflow_dispatch:
+    inputs:
+      ubuntu_ready:
+        description: 'true a new ubuntu image ready'
+        default: false
+        required: true
+        type: boolean
     # This trigger only receives events when the workflow file is on the default branch.
     # https://github.com/actions/github-script/issues/128
   workflow_call:
