@@ -70,8 +70,8 @@ jobs:
       - name: Download Longan Pi3H Image Artifact
         uses: actions/download-artifact@v4
         with:
-          name: ${{ env.ARTIFACT }}
-          path: repository/src/image
+          name: ${{ env.ARTIFACT_NAME }}
+          run-id: ${{ env.RUN_ID }}
 
       - name: Update CustomPiOS Paths
         run: |
