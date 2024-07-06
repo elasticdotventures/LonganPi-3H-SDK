@@ -4,6 +4,7 @@ name: octoprint-lpi3h-ci
 on:
   workflow_dispatch:
     # This trigger only receives events when the workflow file is on the default branch.
+    # https://github.com/actions/github-script/issues/128
   workflow_call:
     inputs:
       ubuntu_ready:
