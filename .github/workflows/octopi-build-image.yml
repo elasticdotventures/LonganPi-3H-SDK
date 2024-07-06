@@ -9,6 +9,10 @@ on:
         default: false
         required: true
         type: boolean
+      artifact:
+        description: 'Artifact name to download'
+        required: true
+        type: string
     # This trigger only receives events when the workflow file is on the default branch.
     # https://github.com/actions/github-script/issues/128
   workflow_call:
@@ -23,13 +27,16 @@ env:
   ARCH: arm64
   BOARD: lpi3h  # Set this to your desired board name
   BUILD_ID: ${{ github.run_id }}  # This sets a unique build ID based on the GitHub run ID
+  ARTIFACT: ${{ github.event.inputs.artifact }}
 
 jobs:
   prepare:
     runs-on: ubuntu-22.04
-    env:
-      CREATE_TARBALL: LonganPi-3H-SDK/build/rootfs.tar
     steps:
+      # output the artifact
+      - name: Artifact
+        run: |-
+          echo "Artifact: ${{ env.ARTIFACT }}"
 
       - name: Install Dependencies
         run: |
@@ -51,7 +58,7 @@ jobs:
       - name: Download Longan Pi3H Image Artifact
         uses: actions/download-artifact@v4
         with:
-          name: lpi3h-${{ env.BOARD }}-${{ env.BUILD_ID }}-ubuntu
+          name: ${{ env.ARTIFACT }}
           path: repository/src/image
 
       - name: Update CustomPiOS Paths
