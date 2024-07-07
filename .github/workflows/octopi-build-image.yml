@@ -36,6 +36,7 @@ env:
   ARTIFACT_ID: ${{ github.event.inputs.artifact_id }}
   ARTIFACT_NAME: ${{ github.event.inputs.artifact_name }}
   RUN_ID: ${{ github.event.inputs.run_id }}
+  BUILD_VARIANT: "lpi3h"
 
 jobs:
   prepare:
