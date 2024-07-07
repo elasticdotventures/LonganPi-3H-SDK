@@ -80,17 +80,18 @@ jobs:
           name: ${{ env.ARTIFACT_NAME }}
           run-id: ${{ env.RUN_ID }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
+          # this will unzip the artifact, so sdcard.img.xz and sdcard.img.xz.sha512 will be present. 
 
       - name: Unzip and move downloaded image
         run: |
           mkdir -p OctoPi/src/image
           cd /home/runner/work/LonganPi-3H-SDK/LonganPi-3H-SDK
-          ls -R .
-          #mv ${{ env.ARTIFACT_NAME }} OctoPi/src/image/
-          unzip ${{ env.ARTIFACT_NAME }} -d OctoPi/src/image
+          mv sdcard.img.xz OctoPi/src/image/sdcard-rpios.img.xz
   
       - name: Display structure of downloaded files
-        run: ls -R
+        run: |
+          pwd
+          ls -R
 
       - name: Update CustomPiOS Paths
         run: |
