@@ -70,8 +70,14 @@ jobs:
       - name: Download Longan Pi3H Image Artifact
         uses: actions/download-artifact@v4
         with:
-          name: ${{ env.ARTIFACT_NAME }}.zip
+          name: ${{ env.ARTIFACT_NAME }}
           run-id: ${{ env.RUN_ID }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          # lpi3h-lpi3h-9823560622-ubuntu.zip
+          # lpi3h-lpi3h-9823560622-ubuntu
+
+      - name: Display structure of downloaded files
+        run: ls -R
 
       - name: Update CustomPiOS Paths
         run: |
