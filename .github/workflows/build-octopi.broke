@@ -4,21 +4,6 @@ name: octoprint-lpi3h-ci
 on:
   workflow_dispatch:
     inputs:
-      # owner:
-      #   description: 'Owner of the repository to download artifact from'
-      #   default: ''
-      #   required: true
-      #   type: string
-      # repo:
-      #   description: 'Repository to download artifact from'
-      #   default: ''
-      #   required: true
-      #   type: string
-      # ref:
-      #   description: 'Ref to download artifact from'
-      #   default: ''
-      #   required: true
-      #   type: string
       artifact_id:
         description: 'Artifact id to download'
         default: ''
