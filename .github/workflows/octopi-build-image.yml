@@ -81,12 +81,14 @@ jobs:
           run-id: ${{ env.RUN_ID }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Unzip and move downloaded image
+        run: |
+          mkdir -p OctoPi/src/image
+          #mv ${{ env.ARTIFACT_NAME }} OctoPi/src/image/
+          unzip ${{ env.ARTIFACT_NAME }} -d OctoPi/src/image
+  
       - name: Display structure of downloaded files
         run: ls -R
-
-      - name: Move downloaded image to OctoPi src/image directory
-        run: |
-          mv ${{ env.ARTIFACT_NAME }} OctoPi/src/image/
 
       - name: Update CustomPiOS Paths
         run: |
