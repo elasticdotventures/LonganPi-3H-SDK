@@ -85,6 +85,7 @@ jobs:
         run: |
           mkdir -p OctoPi/src/image
           cd /home/runner/work/LonganPi-3H-SDK/LonganPi-3H-SDK
+          ls -R .
           #mv ${{ env.ARTIFACT_NAME }} OctoPi/src/image/
           unzip ${{ env.ARTIFACT_NAME }} -d OctoPi/src/image
   
