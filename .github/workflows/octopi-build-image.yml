@@ -61,9 +61,16 @@ jobs:
           repository: 'guysoft/CustomPiOS'
           path: CustomPiOS
 
-      - name: Checkout Project Repository
+      # - name: Checkout Project Repository
+      #   uses: actions/checkout@v2
+      #   with:
+      #     path: 
+      #     submodules: true
+
+      - name: Checkout Project Repository (OctoPi)
         uses: actions/checkout@v2
         with:
+          repository: 'guysoft/OctoPi'
           path: repository
           submodules: true
 
@@ -73,11 +80,13 @@ jobs:
           name: ${{ env.ARTIFACT_NAME }}
           run-id: ${{ env.RUN_ID }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          # lpi3h-lpi3h-9823560622-ubuntu.zip
-          # lpi3h-lpi3h-9823560622-ubuntu
 
       - name: Display structure of downloaded files
         run: ls -R
+
+      - name: Move downloaded image to OctoPi src/image directory
+        run: |
+          mv ${{ env.ARTIFACT_NAME }} OctoPi/src/image/
 
       - name: Update CustomPiOS Paths
         run: |
