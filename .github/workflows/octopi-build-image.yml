@@ -84,6 +84,7 @@ jobs:
       - name: Unzip and move downloaded image
         run: |
           mkdir -p OctoPi/src/image
+          cd /home/runner/work/LonganPi-3H-SDK/LonganPi-3H-SDK
           #mv ${{ env.ARTIFACT_NAME }} OctoPi/src/image/
           unzip ${{ env.ARTIFACT_NAME }} -d OctoPi/src/image
   
