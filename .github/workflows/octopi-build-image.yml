@@ -86,7 +86,7 @@ jobs:
         run: |
           mkdir -p OctoPi/src/image
           cd /home/runner/work/LonganPi-3H-SDK/LonganPi-3H-SDK
-          mv sdcard.img.xz OctoPi/src/image/sdcard-rpios.img.xz
+          mv sdcard.img.xz OctoPi/src/image/sdcard-raspios.img.xz
   
       - name: Display structure of downloaded files
         run: |
