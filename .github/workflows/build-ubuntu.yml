@@ -95,6 +95,7 @@ jobs:
           echo "RUN_ID=${{ github.run_id }}" >> $GITHUB_ENV
 
       # Trigger OctoPi build on success
+      # https://github.com/actions/github-script?tab=readme-ov-file
       - name: Trigger OctoPi Build
         if: success()
         uses: actions/github-script@v7
